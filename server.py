@@ -15,12 +15,13 @@ class ASGIServer:
         """
         Initialize the Server configurations.
         """
-        self.debug: str = settings.DEBUG
+        self.debug: bool = bool(settings.DEBUG)
         self.default_server_host: str = "127.0.0.1"
         self.default_server_port: int = 8000
         self.server_host: str = settings.SERVER_HOST
         self.server_port: int = settings.SERVER_PORT
         self.asgi_application: str = settings.ASGI_APPLICATION
+        self.reload = self.debug
 
     def __validate_debug(self) -> None:
         """
@@ -30,8 +31,9 @@ class ASGIServer:
         """
         if not self.debug:
             if self.server_host is None or self.server_port is None:
-                raise KeyError("To use debug False, you must to specify the HOST and PORT variables.")
-
+                raise KeyError(
+                    "To use debug False, you must specify the HOST and PORT variables."
+                )
         else:
             self.server_host = self.default_server_host
             self.server_port = int(self.default_server_port)
@@ -42,7 +44,12 @@ class ASGIServer:
         """
         self.__validate_debug()
 
-        uvicorn.run(self.asgi_application, host=self.server_host, port=self.server_port)
+        uvicorn.run(
+            self.asgi_application,
+            host=self.server_host,
+            port=self.server_port,
+            reload=self.reload
+        )
 
 
 if __name__ == '__main__':
