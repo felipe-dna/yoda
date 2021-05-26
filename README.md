@@ -1,5 +1,5 @@
 # Y.O.D.A.
-A simple way to create API's with Django.
+A simple way to create an API with Django.
 
 ## Get started
 
