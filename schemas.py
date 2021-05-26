@@ -1,8 +1,8 @@
 from typing import Optional
 
-from django.core.paginator import Paginator, Page
 from pydantic import BaseModel
 from django.db.models import QuerySet
+from django.core.paginator import Paginator, Page
 
 
 class ListResponseSchema(BaseModel):
